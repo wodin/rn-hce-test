@@ -27,6 +27,18 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "./plugin/withReactNativeHce.js",
+        {
+          "appIds": [
+            "D2760000850101",
+            "F0010203040506",
+            "F0394148148100"
+          ]
+        }
+      ]
+    ]
   }
 }
