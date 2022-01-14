@@ -32,13 +32,19 @@
     },
     "plugins": [
       [
-        "./plugin/withReactNativeHce.js",
+        "./plugin/withReactNativeHce",
         {
           "appIds": [
             "D2760000850101",
             "F0010203040506",
             "F0394148148100"
           ]
+        }
+      ],
+      [
+        "./plugin/withAndroidColorEdgeEffect",
+        {
+          "color": "#123456"
         }
       ]
     ]
