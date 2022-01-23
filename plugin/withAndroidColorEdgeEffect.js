@@ -1,5 +1,4 @@
 const { withAndroidStyles, withPlugins } = require("@expo/config-plugins");
-const xml2js = require("xml2js");
 
 function withAndroidColorEdgeEffect(config, { color }) {
   return withAndroidStyles(config, (config) => {
