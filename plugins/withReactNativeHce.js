@@ -1,4 +1,4 @@
-const { withAndroidManifest, withPlugins } = require("@expo/config-plugins");
+const { withAndroidManifest } = require("@expo/config-plugins");
 const xml2js = require("xml2js");
 const { mkdirSync, writeFileSync } = require("fs");
 
@@ -20,16 +20,6 @@ const NfcHceServiceXml = `
 
 let NfcHceService;
 xml2js.parseString(NfcHceServiceXml, (err, result) => (NfcHceService = result.service));
-
-function withNfcHceAndroidManifest(config, { appIds }) {
-  return withAndroidManifest(config, (config) => {
-    config.modResults = addNfcPermissionToManifest(config.modResults);
-    config.modResults = addNfcHceHardwareFeatureToManifest(config.modResults);
-    config.modResults = addNfcHceServiceToManifest(config.modResults);
-    writeAidList(appIds);
-    return config;
-  });
-}
 
 function addNfcPermissionToManifest(androidManifest) {
   // Add `<uses-permission android:name="android.permission.NFC" />` to the AndroidManifest.xml
@@ -143,5 +133,12 @@ function writeAidList(appIds) {
   writeFileSync(`${dir}/aid_list.xml`, xml);
 }
 
-module.exports = (config, props) =>
-  withPlugins(config, [[withNfcHceAndroidManifest, props]]);
+module.exports = function withNfcHceAndroidManifest(config, { appIds }) {
+  return withAndroidManifest(config, (config) => {
+    config.modResults = addNfcPermissionToManifest(config.modResults);
+    config.modResults = addNfcHceHardwareFeatureToManifest(config.modResults);
+    config.modResults = addNfcHceServiceToManifest(config.modResults);
+    writeAidList(appIds);
+    return config;
+  });
+}

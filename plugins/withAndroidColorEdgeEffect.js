@@ -1,12 +1,5 @@
 const { withAndroidStyles, withPlugins } = require("@expo/config-plugins");
 
-function withAndroidColorEdgeEffect(config, { color }) {
-  return withAndroidStyles(config, (config) => {
-    config.modResults = addAndroidColorEdgeEffectToStyles(config.modResults, color);
-    return config;
-  });
-}
-
 function addAndroidColorEdgeEffectToStyles(androidStyles, color) {
   // Add `<item name="android:colorEdgeEffect">...</item>` to the styles.xml
   let resources = androidStyles["resources"];
@@ -58,5 +51,9 @@ function addAndroidColorEdgeEffectToStyles(androidStyles, color) {
   return androidStyles;
 }
 
-module.exports = (config, props) =>
-  withPlugins(config, [[withAndroidColorEdgeEffect, props]]);
+module.exports = function withAndroidColorEdgeEffect(config, { color }) {
+  return withAndroidStyles(config, (config) => {
+    config.modResults = addAndroidColorEdgeEffectToStyles(config.modResults, color);
+    return config;
+  });
+}
