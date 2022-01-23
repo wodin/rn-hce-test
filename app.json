@@ -32,7 +32,7 @@
     },
     "plugins": [
       [
-        "./plugin/withReactNativeHce",
+        "./plugins/withReactNativeHce",
         {
           "appIds": [
             "D2760000850101",
@@ -42,7 +42,7 @@
         }
       ],
       [
-        "./plugin/withAndroidColorEdgeEffect",
+        "./plugins/withAndroidColorEdgeEffect",
         {
           "color": "#123456"
         }
