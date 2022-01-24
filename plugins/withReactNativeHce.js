@@ -1,5 +1,5 @@
 const { withAndroidManifest } = require("@expo/config-plugins");
-const xml2js = require("xml2js");
+const { XML } = require("@expo/config-plugins");
 const { mkdirSync, writeFileSync } = require("fs");
 
 const NfcHceServiceXml = `
@@ -19,7 +19,7 @@ const NfcHceServiceXml = `
 </service>`;
 
 let NfcHceService;
-xml2js.parseString(NfcHceServiceXml, (err, result) => (NfcHceService = result.service));
+XML.parseXMLAsync(NfcHceServiceXml).then((res) => (NfcHceService = res));
 
 function addNfcPermissionToManifest(androidManifest) {
   // Add `<uses-permission android:name="android.permission.NFC" />` to the AndroidManifest.xml
@@ -123,14 +123,12 @@ function hostApduService(appIds) {
   };
 }
 
-function writeAidList(appIds) {
+async function writeAidList(appIds) {
   const obj = hostApduService(appIds);
-  const builder = new xml2js.Builder();
-  const xml = builder.buildObject(obj);
   const dir = "android/app/src/main/res/xml";
 
   mkdirSync(dir, { recursive: true });
-  writeFileSync(`${dir}/aid_list.xml`, xml);
+  await XML.writeXMLAsync({ path: `${dir}/aid_list.xml`, xml: obj });
 }
 
 module.exports = function withNfcHceAndroidManifest(config, { appIds }) {
@@ -141,4 +139,4 @@ module.exports = function withNfcHceAndroidManifest(config, { appIds }) {
     writeAidList(appIds);
     return config;
   });
-}
+};
