@@ -46,6 +46,12 @@
         {
           "color": "#123456"
         }
+      ],
+      [
+        "./plugins/withAndroidApplicationAttributes",
+        {
+          "android:usesCleartextTraffic": false
+        }
       ]
     ]
   }
