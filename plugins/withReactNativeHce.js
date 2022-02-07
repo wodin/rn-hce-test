@@ -1,6 +1,6 @@
 const { withAndroidManifest } = require("@expo/config-plugins");
 const { XML } = require("@expo/config-plugins");
-const { mkdirSync, writeFileSync } = require("fs");
+const { mkdirSync } = require("fs");
 
 const NfcHceServiceXml = `
 <service
