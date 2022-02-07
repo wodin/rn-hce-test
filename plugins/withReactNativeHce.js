@@ -78,17 +78,19 @@ function addNfcHceServiceToManifest(androidManifest) {
     return androidManifest;
   }
 
-  if (!Array.isArray(application["service"])) {
-    application["service"] = [];
+  let services = application["service"];
+  if (!Array.isArray(services)) {
+    services = [];
+    application["service"] = services;
   }
 
   if (
-    !application["service"].find(
+    !services.find(
       (item) =>
         item.$["android:name"] === "com.reactnativehce.services.CardService"
     )
   ) {
-    application["service"].push(NfcHceService);
+    services.push(NfcHceService.service);
   }
 
   return androidManifest;
