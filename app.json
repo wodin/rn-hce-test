@@ -54,6 +54,11 @@
           "android:usesCleartextTraffic": false
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "5ddb00dd-eccb-4e72-82cf-6d4a0fa88f0e"
+      }
+    }
   }
 }
