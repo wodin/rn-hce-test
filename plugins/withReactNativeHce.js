@@ -18,9 +18,6 @@ const NfcHceServiceXml = `
     android:resource="@xml/aid_list"/>
 </service>`;
 
-let NfcHceService;
-XML.parseXMLAsync(NfcHceServiceXml).then((res) => (NfcHceService = res));
-
 function addNfcPermissionToManifest(androidManifest) {
   // Add `<uses-permission android:name="android.permission.NFC" />` to the AndroidManifest.xml
   if (!Array.isArray(androidManifest.manifest["uses-permission"])) {
@@ -62,8 +59,10 @@ function addNfcHceHardwareFeatureToManifest(androidManifest) {
   return androidManifest;
 }
 
-function addNfcHceServiceToManifest(androidManifest) {
+async function addNfcHceServiceToManifest(androidManifest) {
   const { manifest } = androidManifest;
+
+  const NfcHceService = await XML.parseXMLAsync(NfcHceServiceXml);
 
   if (!Array.isArray(manifest["application"])) {
     console.warn("withReactNativeHce: No manifest.application array?");
@@ -134,10 +133,10 @@ async function writeAidList(appIds) {
 }
 
 module.exports = function withNfcHceAndroidManifest(config, { appIds }) {
-  return withAndroidManifest(config, (config) => {
+  return withAndroidManifest(config, async (config) => {
     config.modResults = addNfcPermissionToManifest(config.modResults);
     config.modResults = addNfcHceHardwareFeatureToManifest(config.modResults);
-    config.modResults = addNfcHceServiceToManifest(config.modResults);
+    config.modResults = await addNfcHceServiceToManifest(config.modResults);
     writeAidList(appIds);
     return config;
   });
